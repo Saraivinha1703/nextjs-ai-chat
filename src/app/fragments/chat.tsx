@@ -12,34 +12,40 @@ export function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   
   return (
-    <div className="flex flex-col w-full max-w-xl py-8 pb-24 mx-auto stretch">
-        {
-        messages.length === 0 
-        ? (
-            <div className="flex flex-col gap-8 w-full items-center">
-                <span className="text-2xl font-semibold">Start a conversation with the AI.</span>
-                <PiRobotLight size={80} />
-            </div>
-        ) :
-        <div className="p-2 px-6 flex flex-col gap-4 border border-input rounded-lg mb-2">
+    <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">
+      <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-6rem)] py-8">
+        {messages.length === 0 ? (
+          <div className="flex flex-col gap-8 w-full items-center">
+            <span className="text-2xl font-semibold">
+              Start a conversation with the AI.
+            </span>
+            <PiRobotLight size={80} />
+          </div>
+        ) : (
+          <div
+            className={cn(
+              "[&::-webkit-scrollbar]:w-[0.35rem] [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb:hover]:bg-primary/50",
+              "p-2 px-6 pr-3 flex flex-col gap-4 border border-input rounded-lg mb-2 overflow-auto shadow-sm shadow-black/30 transition duration-300 hover:shadow-lg"
+            )}
+          >
             {messages.map((m) => (
-            <div
+              <div
                 key={m.id}
                 className={cn(
-                "flex w-full",
-                m.role === "user" ? "justify-end" : ""
+                  "flex w-full",
+                  m.role === "user" ? "justify-end" : ""
                 )}
-            >
+              >
                 <Message from={m.role === "user" ? "user" : "ai"}>
-                {m.content}
+                  {m.content}
                 </Message>
-            </div>
+              </div>
             ))}
-        </div>
-        }
-
+          </div>
+        )}
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className="fixed flex gap-2 bottom-0 w-full max-w-xl bg-background/90 p-2 py-8 rounded-lg backdrop-blur-sm supports-[backdrop-filter]:bg-background/50">
+        <div className="flex gap-2 flex-1 w-full bg-black py-6">
           <Input
             className="p-2 border border-input rounded shadow-sm bg-background"
             value={input}
