@@ -1,4 +1,4 @@
-This project was done using only `Next.js` (back-end and front-end).
+This project was done using only `Next.js` (back-end and front-end), try it out [here](https://carlos-neto-nextjs-ai-chat.vercel.app/).
 
 # back-end
 Everything was done following the [Vercel  AI SDK documentation](https://sdk.vercel.ai/docs).
