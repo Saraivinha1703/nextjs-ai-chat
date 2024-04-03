@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project was done using only `Next.js` (back-end and front-end).
 
-## Getting Started
+# back-end
+Everything was done following the [Vercel  AI SDK documentation](https://sdk.vercel.ai/docs).
+I'm also using TypeScript for a stronger typing. The model used is the one that Vercel uses in its documentation the `OpenAssistant` model,
+which is open-source. 
 
-First, run the development server:
+I'm accessing this model through `Hugging Face` which now is basically a GitHub for AI models. 
+You just need to create an API key in your Hugging Face account and add to your environment variables like this:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```env
+HUGGINGFACE_API_TOKEN="hf_secret-key"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# front-end
+I'm using `TailwindCSS` which comes by default with Next.js, `shadcn/ui`, to have base components ready and styled quickly and `next-themes` to provide themes to my application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Extra
+Have fun chating with the **AI**, just be careful with what you wish for ☠️☠️
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![image](https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/e4d29f63-95ba-42cb-94ad-b466c0240259)
