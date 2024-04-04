@@ -35,7 +35,10 @@ export function MobileNavbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                <Link href="/about">About</Link>
+                <Link href="/about" as="/about">
+                  About
+                </Link>
+                <Link href="/generative-ui-chat" as="/generative-ui-chat">Generative UI Chat</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

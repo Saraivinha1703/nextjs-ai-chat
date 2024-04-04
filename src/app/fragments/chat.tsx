@@ -4,13 +4,12 @@ import { Message } from "@/components/message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { PiPaperPlaneTilt, PiRobotThin } from "react-icons/pi";
 import { useChat } from "ai/react";
-import { LuSend } from "react-icons/lu";
-import { PiRobotThin } from "react-icons/pi";
 
 export function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
-  
+
   return (
     <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">
       <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-4.5rem)] pt-6">
@@ -53,7 +52,7 @@ export function Chat() {
             onChange={handleInputChange}
           />
           <Button size="icon">
-            <LuSend size={20} />
+            <PiPaperPlaneTilt size={20} />
           </Button>
         </div>
       </form>

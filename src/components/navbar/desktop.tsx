@@ -17,17 +17,26 @@ export function DesktopNavbar() {
 
         <div className="absolute transition-all duration-300 top-0 p-[0.1rem] opacity-100 group-hover:opacity-0">
           <div className="bg-transparent p-1 rounded-md">
-            <h1 className="text-2xl font-light select-none">
-              Chat
-            </h1>
+            <h1 className="text-2xl font-light select-none">Chat</h1>
           </div>
         </div>
       </Link>
 
       <div className="flex justify-between items-center gap-6 md:gap-20">
         <div className="flex gap-4">
-          <Link href="/about" className="select-none hover:underline" as="/about">
+          <Link
+            href="/about"
+            className="select-none hover:underline"
+            as="/about"
+          >
             About
+          </Link>
+          <Link
+            href="/generative-ui"
+            className="select-none hover:underline"
+            as="/generative-ui"
+          >
+            Generative UI Chat
           </Link>
         </div>
 
@@ -53,7 +62,7 @@ export function DesktopNavbar() {
           </Link>
 
           <div className="px-1">
-              <ThemeSwitcher />
+            <ThemeSwitcher />
           </div>
         </div>
       </div>
