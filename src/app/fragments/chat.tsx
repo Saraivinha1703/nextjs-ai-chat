@@ -6,20 +6,20 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import { LuSend } from "react-icons/lu";
-import { PiRobotLight } from "react-icons/pi";
+import { PiRobotThin } from "react-icons/pi";
 
 export function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   
   return (
     <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">
-      <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-6rem)] py-8">
+      <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-4.5rem)] pt-6">
         {messages.length === 0 ? (
           <div className="flex flex-col gap-8 w-full items-center">
-            <span className="text-2xl font-semibold">
+            <span className="text-2xl font-semibold text-center">
               Start a conversation with the AI.
             </span>
-            <PiRobotLight size={80} />
+            <PiRobotThin size={100} />
           </div>
         ) : (
           <div
@@ -44,8 +44,8 @@ export function Chat() {
           </div>
         )}
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex gap-2 flex-1 w-full bg-black py-6">
+      <form onSubmit={handleSubmit} className="w-full">
+        <div className="flex gap-2 w-full py-4">
           <Input
             className="p-2 border border-input rounded shadow-sm bg-background"
             value={input}
