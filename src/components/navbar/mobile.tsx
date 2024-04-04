@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Link from "next/link";
-//import { ThemeSwitcher } from "../theme-switcher";
+import { ThemeSwitcher } from "../theme-switcher";
 
 export function MobileNavbar() {
   return (
@@ -24,7 +24,7 @@ export function MobileNavbar() {
 
       <div className="flex gap-2">
         <div className="border-r border-input px-1">
-            {/* <ThemeSwitcher /> */}
+            <ThemeSwitcher />
         </div>
         <div className="px-1">
           <DropdownMenu>
