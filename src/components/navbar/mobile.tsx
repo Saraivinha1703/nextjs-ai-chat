@@ -4,6 +4,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Link from "next/link";
@@ -38,7 +39,20 @@ export function MobileNavbar() {
                 <Link href="/about" as="/about">
                   About
                 </Link>
-                <Link href="/generative-ui-chat" as="/generative-ui-chat">Generative UI Chat</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link 
+                  href="/chat-with-tools"
+                  as="/chat-with-tools">
+                    Chat With Tools
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link 
+                  href="/generative-ui"
+                  as="/generative-ui">
+                    Generative UI Chat
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

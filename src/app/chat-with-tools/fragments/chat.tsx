@@ -1,48 +1,20 @@
 "use client";
 
+import { Message } from "@/components/message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { PiPaperPlaneTilt, PiRobotThin } from "react-icons/pi";
-import { useUIState, useActions } from "ai/rsc";
-import { useState } from "react";
-import { AI } from "@/app/action";
-import { Message } from "@/components/message";
+import { useChat } from "ai/react";
 
-export function GenerativeUIChat() {
-  const [messages, setMessages] = useUIState<typeof AI>();
-  const { submitUserMessage } = useActions<typeof AI>();
-  // const [aiState, setAIState] = useAIState<typeof AI>();
-  const [input, setInput] = useState<string>('');
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    // Add user message to UI state
-    setMessages((curr) => [
-      ...curr,
-      {
-        id: Date.now(),
-        display: (
-          <div className="flex w-full justify-end">
-            <Message from="user">{input}</Message>
-          </div>
-        ),
-      },
-    ]);
-
-    // Submit and get response message
-    const responseMessage = await submitUserMessage(input);
-    setMessages((currentMessages) => [...currentMessages, responseMessage]);
-
-    setInput('');
-  }
+export function Chat() {
+  const { messages, input, handleInputChange, handleSubmit, data } = useChat({api: 'api/chat-with-tools'});
 
   return (
     <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">
       <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-4.5rem)] pt-6">
         <span className="w-full text-center text-sm text-muted">
-          GPT 3.5 Turbo (0125)
+          GPT 3.5 Turbo (0125) With Tools
         </span>
         {messages.length === 0 ? (
           <div className="flex flex-col gap-8 w-full items-center">
@@ -58,22 +30,29 @@ export function GenerativeUIChat() {
               "p-2 px-6 pr-3 flex flex-col gap-4 border border-input rounded-lg mb-2 overflow-auto shadow-sm shadow-black/30 transition duration-300 hover:shadow-lg"
             )}
           >
-            {
-              // View messages in UI state
-              messages.map((message) => message.display)
-            }
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                className={cn(
+                  "flex w-full",
+                  m.role === "user" ? "justify-end" : ""
+                )}
+              >
+                <Message from={m.role === "user" ? "user" : "ai"}>
+                  {m.content}
+                </Message>
+              </div>
+            ))}
           </div>
         )}
       </div>
-      <form className="w-full" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-full">
         <div className="flex gap-2 w-full py-4">
           <Input
             className="p-2 border border-input rounded shadow-sm bg-background"
             value={input}
             placeholder="Say something..."
-            onChange={(event) => {
-              setInput(event.target.value);
-            }}
+            onChange={handleInputChange}
           />
           <Button size="icon">
             <PiPaperPlaneTilt size={20} />

@@ -32,6 +32,13 @@ export function DesktopNavbar() {
             About
           </Link>
           <Link
+            href="/chat-with-tools"
+            className="select-none hover:underline"
+            as="/chat-with-tools"
+          >
+            Chat With Tools
+          </Link>
+          <Link
             href="/generative-ui"
             className="select-none hover:underline"
             as="/generative-ui"

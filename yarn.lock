@@ -217,6 +217,13 @@
     zod "^3.22.4"
     zod-to-json-schema "^3.22.3"
 
+"@mistralai/mistralai@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@mistralai/mistralai/-/mistralai-0.1.3.tgz#d1edd0e21d5a1f1d1f47a3e32c6bff7f0493d1a4"
+  integrity sha512-WUHxC2xdeqX9PTXJEqdiNY54vT2ir72WSJrZTTBKRnkfhX6zIfCYA24faRlWjUB5WTpn+wfdGsTMl3ArijlXFA==
+  dependencies:
+    node-fetch "^2.6.7"
+
 "@next/env@13.5.6":
   version "13.5.6"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.5.6.tgz#c1148e2e1aa166614f05161ee8f77ded467062bc"
