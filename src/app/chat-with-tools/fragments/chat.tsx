@@ -8,7 +8,7 @@ import { PiPaperPlaneTilt, PiRobotThin } from "react-icons/pi";
 import { useChat } from "ai/react";
 
 export function Chat() {
-  const { messages, input, handleInputChange, handleSubmit, data } = useChat({api: 'api/chat-with-tools'});
+  const { messages, input, handleInputChange, handleSubmit } = useChat({api: 'api/chat-with-tools'});
 
   return (
     <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">

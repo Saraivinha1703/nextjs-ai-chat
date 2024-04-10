@@ -3,7 +3,7 @@ import "server-only";
 import { Message } from "@/components/message";
 import { getMutableAIState, render, createAI } from "ai/rsc";
 import OpenAI from "openai";
-import { PiCloudSun, PiSpinnerGap, PiSun, PiSunDim } from "react-icons/pi";
+import { PiSpinnerGap } from "react-icons/pi";
 import { z } from "zod";
 import { sleep } from "@/lib/utils";
 import { randomUUID } from "crypto";

@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     ) => {
       for (const toolCall of call.tools) {
         if (toolCall.func.name === "get_weather_info") {
-
+          //call any API here!!
           const weatherData = {
             temperature: "28º",
             location: toolCall.func.arguments.location
@@ -90,11 +90,8 @@ export async function POST(req: Request) {
     },
     onCompletion(completion) {
       console.log("completion: ", completion);
-      data.append({
-        content: completion,
-      });
     },
-    onFinal(completion) {
+    onFinal() {
       data.close();
     },
   });
