@@ -33,7 +33,7 @@ The streaming only works with OpenAI, in this case we are going to use Together 
 
 Here is how it should work:
 
-<video src="./public/videos/Generative UI.mp4" controls></video>
+https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/b0b0056d-96a5-4183-ac7b-8104379388d4
 
 This feature was developed based on Vercel's Google Generative UI chat, so in order to develop this feature you just need to check [their repository](https://github.com/vercel-labs/gemini-chatbot/blob/main/lib/chat/actions.tsx) and my file in `src/lib/chat/actions.tsx`.
 
