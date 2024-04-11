@@ -11,8 +11,8 @@ import { Message } from "@/components/message";
 
 export function GenerativeUIChat() {
   const [messages, setMessages] = useUIState<typeof AI>();
-  const { submitUserMessage } = useActions();
-  // const [aiState, setAIState] = useAIState<typeof AI>();
+  const { submitUserMessage } = useActions<typeof AI>();
+
   const [input, setInput] = useState<string>('');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -42,7 +42,7 @@ export function GenerativeUIChat() {
     <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">
       <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-4.5rem)] pt-6">
         <span className="w-full text-center text-sm text-muted">
-          GPT 3.5 Turbo (0125)
+          mistralai/Mixtral-8x7B-Instruct-v0.1
         </span>
         {messages.length === 0 ? (
           <div className="flex flex-col gap-8 w-full items-center">

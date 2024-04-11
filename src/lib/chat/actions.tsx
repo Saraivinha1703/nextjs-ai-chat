@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { createAI, createStreamableUI, createStreamableValue, getAIState, getMutableAIState } from 'ai/rsc';
-import { experimental_generateText, experimental_streamText } from 'ai';
+import { experimental_generateText } from 'ai';
 import { PiSpinnerGap } from 'react-icons/pi';
 import { Mistral } from "ai/mistral"
 import { z } from 'zod';
@@ -55,7 +55,7 @@ export async function submitUserMessage(content: string) {
 
     //not sure what this is used for
     const textStream = createStreamableValue('');
-    const loadingStream = createStreamableUI(<PiSpinnerGap className='animate-spin text-accent' size={30} />);
+    const loadingStream = createStreamableUI(<PiSpinnerGap className='animate-spin text-muted' size={30} />);
     const messageStream = createStreamableUI(null);
     const uiStream = createStreamableUI();
 
@@ -78,13 +78,14 @@ export async function submitUserMessage(content: string) {
                     console.log("tool being executed!!!");
                     console.log(location);
                     console.log("----------------------------------------");
+                    loadingStream.done(null);
                     messageStream.update(<WeekWeatherSkeleton />)
                     
                     const weatherInfo = await getWeather();
 
                     await sleep(2000);
 
-                    messageStream.update(<WeeakWeather location={location} weather={weatherInfo.weather} />)
+                    messageStream.update(<WeeakWeather location={location} weather={weatherInfo.weather} />);
                   }
                 },
               },
@@ -93,12 +94,12 @@ export async function submitUserMessage(content: string) {
               messages: [...history],
             });
 
-            loadingStream.done(null);
-
+            
             console.log("result warnings: ", result.warnings);
             console.log("result: ", result);
-
+            
             if (result.finishReason === 'other') {
+              loadingStream.done(null);
               messageStream.update(<Message from="ai">{result.text}</Message>);
             }
 
@@ -110,41 +111,10 @@ export async function submitUserMessage(content: string) {
                 content: result.text
               }
             ])
-              // for await (const delta of result.fullStream) {
-              //     const { type } = delta;
-              //     console.log(delta);
-
-              //     if(type === 'text-delta') {
-              //         const { textDelta } = delta;
-
-              //         // concatenating LLM string response
-              //         textContent += textDelta;
-              //         //updating UI to display LLM response in a box in the chat
-              //         messageStream.update(<Message from="ai">{textContent}</Message>);
-
-              //         //updating the ai state with the new LLM response
-              //         aiState.update([
-              //             ...aiState.get(),
-              //             {
-              //                 id: Date.now().toString(),
-              //                 role: 'assistant',
-              //                 content: textContent
-              //             }
-              //         ]);
-              //     } else if(type === 'tool-call') {
-              //       const { toolCallId, toolName } = delta;
-
-              //       if(toolName === 'getWeatherInfo') {
-              //         const { args } = delta;
-              //         console.log(args);
-              //       }
-              //     }
-              // }
 
             uiStream.done();
             textStream.done();
             messageStream.done();
-            loadingStream.done();
         } catch(e) {
             console.error(e);
 
@@ -184,53 +154,19 @@ export type UIState = {
   attachments?: React.ReactNode;
 }[];
 
-// type X = {
-//   submitUserMessage: (content: string) => Promise<{
-//     id: string;
-//     attachments: JSX.Element;
-//     loading: JSX.Element;
-//     display: JSX.Element;
-//   }>;
-// };
+type Actions = {
+  submitUserMessage: (content: string) => Promise<{
+     id: string,
+      attachments: JSX.Element,
+      loading: JSX.Element,
+      display: JSX.Element,
+  }>;
+};
 
-export const AI = createAI({
+export const AI = createAI<AIState, UIState, Actions>({
   actions: {
     submitUserMessage,
   },
   initialUIState: [] as UIState,
   initialAIState: [] as AIState,
-  unstable_onGetUIState: async () => {
-    "use server";
-
-    const aiState = getAIState();
-    if (aiState) {
-      const uiState = getUIStateFromAIState(aiState);
-      return uiState;
-    } else {
-      return;
-    }
-  },
 });
-
-const getUIStateFromAIState = (aiState: ChatMessage[]) => {
-    return aiState
-      .filter((message) => message.role !== "system")
-      .map((message) => ({
-        id: Date.now().toString(),
-        display:
-          message.role === "assistant" ? (
-            message.display?.name === "getWeatherInfo" ? (
-              <WeeakWeather
-                location={message.display?.props.location}
-                weather={message.display.props.weather}
-              />
-            ) : (
-              <Message from="ai">{message.content}</Message>
-            )
-          ) : message.role === "user" ? (
-            <Message from="user">{message.content}</Message>
-          ) : (
-            <Message from="ai">{message.content}</Message>
-          ),
-      }));
-}
