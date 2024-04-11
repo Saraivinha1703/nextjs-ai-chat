@@ -6,12 +6,12 @@ import { cn } from "@/lib/utils";
 import { PiPaperPlaneTilt, PiRobotThin } from "react-icons/pi";
 import { useUIState, useActions } from "ai/rsc";
 import { useState } from "react";
-import { AI } from "@/app/action";
+import { AI } from "@/lib/chat/actions";
 import { Message } from "@/components/message";
 
 export function GenerativeUIChat() {
   const [messages, setMessages] = useUIState<typeof AI>();
-  const { submitUserMessage } = useActions<typeof AI>();
+  const { submitUserMessage } = useActions();
   // const [aiState, setAIState] = useAIState<typeof AI>();
   const [input, setInput] = useState<string>('');
 
@@ -22,7 +22,7 @@ export function GenerativeUIChat() {
     setMessages((curr) => [
       ...curr,
       {
-        id: Date.now(),
+        id: Date.now().toString(),
         display: (
           <div className="flex w-full justify-end">
             <Message from="user">{input}</Message>
@@ -33,7 +33,7 @@ export function GenerativeUIChat() {
 
     // Submit and get response message
     const responseMessage = await submitUserMessage(input);
-    setMessages((currentMessages) => [...currentMessages, responseMessage]);
+    setMessages(currentMessages => [...currentMessages, responseMessage]);
 
     setInput('');
   }
@@ -58,10 +58,13 @@ export function GenerativeUIChat() {
               "p-2 px-6 pr-3 flex flex-col gap-4 border border-input rounded-lg mb-2 overflow-auto shadow-sm shadow-black/30 transition duration-300 hover:shadow-lg"
             )}
           >
-            {
-              // View messages in UI state
-              messages.map((message) => message.display)
-            }
+            {messages.map((message) => (
+              <div key={message.id}>
+                {message.loading}
+                {message.display}
+                {message.attachments}
+              </div>
+            ))}
           </div>
         )}
       </div>
