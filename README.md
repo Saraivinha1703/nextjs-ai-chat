@@ -1,8 +1,8 @@
-This project was done using only `Next.js` (back-end and front-end), try it out [here](https://carlos-neto-nextjs-ai-chat.vercel.app/) - In this <i>"version"</i> <small>`(v0.1-lw)`</small> I'm using `OpenAI`. Due to the fact of being poor 😒, 
-the Tool Calling and Generative UI is not yet available in the production environment.
+This project was done using only `Next.js` (back-end and front-end) - In this <i>"version"</i> <small>`(v0.2-lw)`</small> I'm using `Mistral` model and `Together AI` as the provider.
 
 Currently to work with Generative UI, Vercel's AI SDK only supports OpenAI with their `render` function
-which you can check out in their documentation about [Generative UI](https://sdk.vercel.ai/docs/concepts/ai-rsc). You can also check out their blog post announcing their AI SDK 3.0 and their SaaS v0 [here](https://vercel.com/blog/ai-sdk-3-generative-ui).
+which you can check out in their documentation about [Generative UI](https://sdk.vercel.ai/docs/concepts/ai-rsc). You can also check out their blog post announcing their AI SDK 3.0 and their SaaS v0 [here](https://vercel.com/blog/ai-sdk-3-generative-ui), but there is another way to make Generative UI without the `render` function.
+
 # back-end
 
 Everything was done following the [Vercel  AI SDK documentation](https://sdk.vercel.ai/docs).
@@ -29,7 +29,7 @@ TOGETHER_AI_API_KEY="secret-key"
 ## Generative UI
 With Generative UI we want an AI that is able to access external APIs, in this case, it is able to tell weather information, the only difference is that it streams components to render with the information, which opens more possibilities to external API calls by clicking in buttons in the generated components. 
 
-The streaming only works with OpenAI, in this case we are going to use Together AI as the provider along with the Mistral model, `mistralai/Mixtral-8x7B-Instruct-v0.1`.
+The streaming only works with OpenAI, in this case we are going to use Together AI as the provider along with the Mistral model, `mistralai/Mixtral-8x7B-Instruct-v0.1`. See Together AI models that support tool calling [here](https://docs.together.ai/docs/function-calling).
 
 Here is how it should work:
 

@@ -60,9 +60,7 @@ export function GenerativeUIChat() {
           >
             {messages.map((message) => (
               <div key={message.id}>
-                {message.loading}
                 {message.display}
-                {message.attachments}
               </div>
             ))}
           </div>
