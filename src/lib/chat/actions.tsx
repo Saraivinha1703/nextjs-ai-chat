@@ -26,64 +26,64 @@ async function getResult(history: ExperimentalMessage[], messageStream: ReturnTy
 }
 
 async function submitUserMessage(content: string) {
-    "use server";
+  "use server";
 
-    const aiState = getMutableAIState()
-    
-    // adding user message
-    aiState.update([
+  const aiState = getMutableAIState()
+  
+  // adding user message
+  aiState.update([
+    ...aiState.get(),
+    {
+      id: Date.now().toString(),
+      role: "user",
+      content
+    }
+  ]);
+
+  //gettin history -> previous and current user messages
+  const history = aiState.get().map((message: ChatMessage) => ({
+    role: message.role,
+    content: message.content,
+  }));
+
+  //creating streamable message with a initial loading component
+  const messageStream = createStreamableUI(
+    <PiSpinnerGap className="animate-spin text-muted" size={30} />
+  );
+
+  (async () => {
+    try {
+      const result = await getResult(history, messageStream);
+      
+      console.log("result warnings: ", result.warnings);
+      console.log("result: ", result);
+      
+      if (result.finishReason === 'other') {
+        messageStream.update(<Message from="ai">{result.text}</Message>);
+      }
+
+      aiState.update([
         ...aiState.get(),
         {
-            id: Date.now().toString(),
-            role: "user",
-            content
+          id: Date.now().toString(),
+          role: 'assistant',
+          content: result.text
         }
-    ]);
+      ])
 
-    //gettin history -> previous and current user messages
-    const history = aiState.get().map((message: ChatMessage) => ({
-      role: message.role,
-      content: message.content,
-    }));
+      messageStream.done();
+    } catch(e) {
+      console.error(e);
+      const error = new Error('An error occured during the LLM execution.');
+      messageStream.error(error);
+      aiState.done([]);
+    }
+  })();
 
-    //creating streamable message with a initial loading component
-    const messageStream = createStreamableUI(
-      <PiSpinnerGap className="animate-spin text-muted" size={30} />
-    );
-
-    (async () => {
-        try {
-            const result = await getResult(history, messageStream);
-            
-            console.log("result warnings: ", result.warnings);
-            console.log("result: ", result);
-            
-            if (result.finishReason === 'other') {
-              messageStream.update(<Message from="ai">{result.text}</Message>);
-            }
-
-            aiState.update([
-              ...aiState.get(),
-              {
-                id: Date.now().toString(),
-                role: 'assistant',
-                content: result.text
-              }
-            ])
-
-            messageStream.done();
-        } catch(e) {
-            console.error(e);
-            const error = new Error('An error occured during the LLM execution.');
-            messageStream.error(error);
-            aiState.done([]);
-        }
-    })();
-
-    return {
-      id: Date.now().toString(),
-      display: messageStream.value,
-    };
+  return {
+    id: Date.now().toString(),
+    display: messageStream.value,
+  };
 }
 
 export const AI = createAI<AIState, UIState, Actions>({
