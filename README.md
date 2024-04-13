@@ -138,9 +138,7 @@ export function GenerativeUIChat() {
           >
             {messages.map((message) => (
               <div key={message.id}>
-                {message.loading}
                 {message.display}
-                {message.attachments}
               </div>
             ))}
           </div>
@@ -166,7 +164,7 @@ export function GenerativeUIChat() {
 }
 
 ```
-The important part here is how we render the messages which is with the `display`, `attachments` and `loading` properties returned from the server action and adding the user's input to the UI in the `handleSubmit` method.
+The important part here is how we render the messages which is with the `display` property returned from the server action and adding the user's input to the UI in the `handleSubmit` method.
 
 # Extra
 Have fun chating with the **AI**, just be careful with what you wish for ☠️☠️
