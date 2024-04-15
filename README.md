@@ -13,10 +13,12 @@ The LLM have our vector store database, in this case [Pinecone](https://docs.pin
 
 Here is how it works:
 
+https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/2bdca75b-31e1-4aa9-bd9e-2c927540371b
 
-The main functions are in the `app/lib/utils` folder, those functions are used to create, update and query into our vetor store in Pinecone.
+The main functions are in the `app/lib/utils` folder, those functions are used to create, update and query into our vetor store in Pinecone, all the responses are based on the data from our `dividend.txt` file.
 
 Goals:
+- Stream the response.
 - Build a chat instead of just a Q&A conversation with tools and keeping the context of the conversation.
 - Use other LLM instead of OpenAI models.
 
