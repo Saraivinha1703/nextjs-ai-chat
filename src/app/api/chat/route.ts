@@ -1,43 +1,26 @@
-import { HfInference } from "@huggingface/inference";
-import { HuggingFaceStream, StreamingTextResponse } from "ai";
-import { experimental_buildOpenAssistantPrompt } from "ai/prompts";
-
-// Create a new HuggingFace Inference instance
-const Hf = new HfInference(process.env.HUGGINGFACEHUB_API_TOKEN, {
-  wait_for_model: true, 
-  fetch: async (url, init) => {
-    console.log("url: ", url);
-    console.log("init: ", init);
-    const response = await fetch(url, init);
-    console.log("response: ", response);
-    return new Response(response.body)
-  }
-});
-
-// IMPORTANT! Set the runtime to edge
+import { StreamingTextResponse, LangChainStream, Message } from "ai";
+import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { HuggingFaceInference } from "@langchain/community/llms/hf";
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-  // Extract the `messages` from the body of the request
   const { messages } = await req.json();
 
-  const response = Hf.textGenerationStream({
-    model: "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5",
-    inputs: experimental_buildOpenAssistantPrompt(messages),
-    parameters: {
-      temperature: 0.4,
-      max_new_tokens: 200,
-      // @ts-ignore (this is a valid parameter specifically in OpenAssistant models)
-      typical_p: 0.2,
-      repetition_penalty: 1,
-      truncate: 1000,
-      return_full_text: false,
-    },
+  const { stream, handlers } = LangChainStream();
+
+  const llm = new HuggingFaceInference({
+    model: "bigcode/santacoder",
+    apiKey: process.env.HUGGINGFACEHUB_API_KEY, // In Node.js defaults to process.env.HUGGINGFACEHUB_API_KEY
   });
 
-  // Convert the response into a friendly text-stream
-  const stream = HuggingFaceStream(response);
-
-  // Respond with the stream
+  llm
+    .stream(
+      (messages as Message[]).map((m) =>
+        m.role == "user"
+          ? new HumanMessage(m.content)
+          : new AIMessage(m.content)
+      ), {callbacks: [handlers]}
+    )
+    .catch(console.error);
   return new StreamingTextResponse(stream);
 }

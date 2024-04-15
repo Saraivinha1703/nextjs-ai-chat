@@ -45,6 +45,13 @@ export function DesktopNavbar() {
           >
             Generative UI Chat
           </Link>
+          <Link
+            href="/semantic-search"
+            className="select-none hover:underline"
+            as="/semantic-search"
+          >
+            Semantic Search
+          </Link>
         </div>
 
         <div className="flex items-center">

@@ -17,7 +17,7 @@ export function MobileNavbar() {
         <div className="bg-gradient-to-tr from-30% from-purple-500/70 via-50% via-yellow-500/70 to-80% to-rose-600/70 p-[0.1rem] rounded-md">
           <div className="bg-background p-1 rounded-md">
             <h1 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-tr from-30% from-purple-500 via-yellow-500 to-rose-600">
-              Index
+              Chat
             </h1>
           </div>
         </div>
@@ -52,6 +52,13 @@ export function MobileNavbar() {
                   href="/generative-ui"
                   as="/generative-ui">
                     Generative UI Chat
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link 
+                  href="/semantic-search"
+                  as="/semantic-search">
+                    Semantic Search
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
