@@ -2,24 +2,42 @@ import { HfInference } from "@huggingface/inference";
 import { HuggingFaceStream, StreamingTextResponse } from "ai";
 import { experimental_buildOpenAssistantPrompt } from "ai/prompts";
 
-const Hf = new HfInference(process.env.HUGGINGFACEHUB_API_TOKEN);
+// Create a new HuggingFace Inference instance
+const Hf = new HfInference(process.env.HUGGINGFACEHUB_API_TOKEN, {
+  wait_for_model: true, 
+  fetch: async (url, init) => {
+    console.log("url: ", url);
+    console.log("init: ", init);
+    const response = await fetch(url, init);
+    console.log("response: ", response);
+    return new Response(response.body)
+  }
+});
 
+// IMPORTANT! Set the runtime to edge
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-    const { prompt } = await req.json();
-    const response = Hf.textGenerationStream({
-      model: "google/flan-t5-xxl",
-      inputs: prompt,
-      parameters: {
-        max_new_tokens: 1024,
-        temperature: 0.4,
-        repetition_penalty: 1,
-        truncate: 1000,
-        return_full_text: false,
-      },
-    });
+  // Extract the `messages` from the body of the request
+  const { messages } = await req.json();
 
-    const stream = HuggingFaceStream(response);
-    return new StreamingTextResponse(stream);
+  const response = Hf.textGenerationStream({
+    model: "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5",
+    inputs: experimental_buildOpenAssistantPrompt(messages),
+    parameters: {
+      temperature: 0.4,
+      max_new_tokens: 200,
+      // @ts-ignore (this is a valid parameter specifically in OpenAssistant models)
+      typical_p: 0.2,
+      repetition_penalty: 1,
+      truncate: 1000,
+      return_full_text: false,
+    },
+  });
+
+  // Convert the response into a friendly text-stream
+  const stream = HuggingFaceStream(response);
+
+  // Respond with the stream
+  return new StreamingTextResponse(stream);
 }

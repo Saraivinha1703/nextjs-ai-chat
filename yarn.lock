@@ -93,24 +93,10 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.1.tgz#16308cea045f0fc777b6ff20a9f25474dd8293d2"
   integrity sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==
 
-"@huggingface/agents@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@huggingface/agents/-/agents-0.0.5.tgz#9b45c42526cd72ef670497a5fca01e7c57fd696c"
-  integrity sha512-h3mutXX0sFg4o9ZDHh3gzsF+qydcrTW9MVll2g/IVrNiQ0pSfXZqOQPRnfd85XU49buY3Zd1oHUDI0Bz8PznJw==
-  dependencies:
-    "@huggingface/inference" "^2.6.1"
-
-"@huggingface/hub@^0.14.7":
-  version "0.14.7"
-  resolved "https://registry.yarnpkg.com/@huggingface/hub/-/hub-0.14.7.tgz#8dae7f1cc38cfbf2f78d7efc27d7d04f5a24a515"
-  integrity sha512-MJeGSNZlS2rGBeCcyyL8WDHBhYplonBGp3ULsCFk62HpKmrFTQ98BsG4H/csRvuCn5pFmOsnHzGbWoAaHA0Xxg==
-  dependencies:
-    hash-wasm "^4.9.0"
-
-"@huggingface/inference@^2.6.1", "@huggingface/inference@^2.6.6":
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/@huggingface/inference/-/inference-2.6.6.tgz#6b637a75b4b79831ad2fbc0046e3e56baf429b1e"
-  integrity sha512-5VEsrKj/gQ0BViUHX43VFlgbVH5OR+w6/auTQkvMqnxF3e8yK2AqAVP+zoF4dcm1DEnxUkPGeNYrxOwIUFxjuw==
+"@huggingface/inference@^2.5.1":
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/@huggingface/inference/-/inference-2.6.7.tgz#9ae10a7c8cef90a53d8336ebb0ce98cc9576fa5b"
+  integrity sha512-vFBqvtU3LhxjufTs0jcRrDSc0nK+lah10bOgvlIn80lAH4JwMzHHPBQ4g4ECEdRD0PIt6EpTiidEZQq2sArb5Q==
 
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
@@ -1983,11 +1969,6 @@ has-tostringtag@^1.0.0, has-tostringtag@^1.0.2:
   integrity sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==
   dependencies:
     has-symbols "^1.0.3"
-
-hash-wasm@^4.9.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/hash-wasm/-/hash-wasm-4.11.0.tgz#7d1479b114c82e48498fdb1d2462a687d00386d5"
-  integrity sha512-HVusNXlVqHe0fzIzdQOGolnFN6mX/fqcrSAOcTBXdvzrXVHwTz11vXeKRmkR5gTuwVpvHZEIyKoePDvuAR+XwQ==
 
 hasown@^2.0.0, hasown@^2.0.1, hasown@^2.0.2:
   version "2.0.2"

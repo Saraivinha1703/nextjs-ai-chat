@@ -3,6 +3,12 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  fetch: async (url, init) => {
+    console.log(url);
+    console.log(init?.body);
+    const response = await fetch(url, init);
+    return new Response(response.body);
+  },
 });
 
 export const runtime = "edge";
