@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { PiRobotThin, PiSpinnerGapLight } from "react-icons/pi";
 
-export default function SemanticSearchPage() {
+export default function SimpleRAGPage() {
     const [query, setQuery] = useState<string>("");
     const [result, setResult] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     
     async function createIndexAndEmbeddings() {
         try {
-            const result = await fetch("/api/semantic-search/setup", {
+            const result = await fetch("/api/simple-rag/setup", {
               method: "GET",
             });
 
@@ -30,7 +30,7 @@ export default function SemanticSearchPage() {
         setLoading(true);
 
         try {
-          const result = await fetch("api/semantic-search/read", {
+          const result = await fetch("api/simple-rag/read", {
             method: "POST",
             body: JSON.stringify({query}),
           });

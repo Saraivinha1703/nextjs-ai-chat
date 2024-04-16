@@ -14,7 +14,7 @@ export async function GET() {
     const docs: Document<Record<string, any>>[] = [];
     
     try {
-        const loader = new DirectoryLoader("./documents", {
+        const loader = new DirectoryLoader("./documents/financial", {
             ".txt": path => new TextLoader(path),
             ".md": path => new TextLoader(path),
             ".pdf": path => new PDFLoader(path),
