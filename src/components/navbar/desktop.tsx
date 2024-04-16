@@ -46,11 +46,11 @@ export function DesktopNavbar() {
             Generative UI Chat
           </Link>
           <Link
-            href="/semantic-search"
+            href="/simple-rag"
             className="select-none hover:underline"
-            as="/semantic-search"
+            as="/simple-rag"
           >
-            Semantic Search
+            Simple RAG
           </Link>
         </div>
 

@@ -56,9 +56,9 @@ export function MobileNavbar() {
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link 
-                  href="/semantic-search"
-                  as="/semantic-search">
-                    Semantic Search
+                  href="/simple-rag"
+                  as="/simple-rag">
+                    Simple RAG
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
