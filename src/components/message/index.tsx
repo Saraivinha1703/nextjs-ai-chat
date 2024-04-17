@@ -16,7 +16,7 @@ export function Message({from, ...props}: MessageProps) {
         )}
         {...props}
       >
-        <span className="text-xs text-muted">User</span>
+        <span className="text-xs text-accent">User</span>
         {props.children}
       </div>
     ) : (

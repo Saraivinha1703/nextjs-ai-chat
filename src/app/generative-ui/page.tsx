@@ -1,4 +1,4 @@
-import { AI } from "../action";
+import { AI } from "../../lib/chat/actions";
 import { GenerativeUIChat } from "./fragments/generative-ui-chat";
 
 export default function GenerativeUIPage() {

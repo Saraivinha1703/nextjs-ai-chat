@@ -1,62 +1,41 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { HfInference } from "@huggingface/inference";
-import { createAI, getMutableAIState, render } from "ai/rsc";
+import "server-only";
+
+import { Message } from "@/components/message";
+import { getMutableAIState, render, createAI } from "ai/rsc";
+import OpenAI from "openai";
+import { PiSpinnerGap } from "react-icons/pi";
 import { z } from "zod";
+import { sleep } from "@/lib/utils";
+import { randomUUID } from "crypto";
+import { WeeakWeather } from "@/components/week-weather";
+import { WeekWeatherSkeleton } from "@/components/week-weather/week-weather-skeleton";
 
-type InitialAIStateProps = {
-    role: 'user' | 'assistant' | 'system' | 'function';
-    content: string;
-    id?: string;
-    name?: string;
-}
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-type InitialUIStateProps = {
-    id: number;
-    display: React.ReactNode;
-}
-
-const hf = new HfInference(process.env.HUGGINGFACEHUB_API_TOKEN);
-
-function Loading() {
-    return (
-        <Skeleton className="flex flex-col gap-2 p-4 w-full h-10">
-            <Skeleton className="w-1/4 h-3" />
-            <Skeleton className="w-4/5 h-3" />
-            <Skeleton className="w-1/2 h-3" />
-            <Skeleton className="w-3/4 h-3" />
-        </Skeleton>
-    )
-}
-
-function EventSchedule({
-  date,
-  time,
-  location,
-}: {
-  date: string;
-  time: string;
-  location: string;
-}) {
-  return (
-    <div className="flex flex-col gap-2 bg-red-500">
-      <h1 className="text-2xl font-semibold">Event Information</h1>
-      <span>
-        Date: {date} at {time}
-      </span>
-      <span>Location: {location}</span>
-    </div>
-  );
+async function getWeather() {
+  //Make an API Call here!!
+  return {
+    weather: {
+      monday: "30ºC",
+      tuesday: "28ºC",
+      wednesday: "32ºC",
+      thursday: "29ºC",
+      friday: "27ºC",
+      saturday: "28ºC",
+      sunday: "29ºC",
+    },
+  };
 }
 
 async function submitUserMessage(input: string) {
   "use server";
-  const aiState = getMutableAIState();
+  
+  const aiState = getMutableAIState<typeof AI>();
 
-  // Update the AI state with the new user message.
   aiState.update([
-    //keeping previous messages
     ...aiState.get(),
-    //adding new input
     {
       role: "user",
       content: input,
@@ -64,22 +43,20 @@ async function submitUserMessage(input: string) {
   ]);
 
   const ui = render({
-    model: "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5",
-    provider: hf.textGenerationStream,
+    provider: openai,
+    model: "gpt-3.5-turbo-0125",
     messages: [
-      //prompt template
       {
         role: "system",
-        content: "You are a helpful AI and make event schedules",
+        content: `You are a helpful assistant that can access external functions when the user asks for. Your name is Mistral AI.
+          If the user asks for the weather and passes the location, call \`getWeatherInfo\` to show current weather at that location.`,
       },
-      //previous and new message
-      ...aiState.get(),
+      {
+        role: "user",
+        content: input,
+      },
     ],
-    // `text` is called when an AI returns a text response (as opposed to a tool call).
-    // Its content is streamed from the LLM, so this function will be called
-    // multiple times with `content` being incremental.
     text: ({ content, done }) => {
-      // When it's the final content, mark the state as done and ready for the client to access.
       if (done) {
         aiState.done([
           ...aiState.get(),
@@ -90,47 +67,76 @@ async function submitUserMessage(input: string) {
         ]);
       }
 
-      return <p>{content}</p>;
+      return (
+        <div className="flex w-full">
+          <Message from="ai">{content}</Message>
+        </div>
+      );
     },
-    tools: {
-        get_event_info: {
-            description: 'Get the information to schedule an event',
-            parameters: z.object({
-                date: z.string().describe('the event date'),
-                time: z.string().describe('the event time'),
-                location: z.string().describe('the event location'),
-            }).required(),
-            render: async function* (props) {
-                yield <Loading />
+    initial: (
+      <div>
+        <PiSpinnerGap className="animate-spin text-muted" size={25} />
+      </div>
+    ),
+    functions: {
+      getWeatherInfo: {
+        description:
+          "Get the information for the weather according to a certain location.",
+        parameters: z.object({
+          location: z
+            .string()
+            .describe("The location to get the weather from."),
+        }),
+        render: async function* ({ location }) {
+          yield <WeekWeatherSkeleton />;
 
-                aiState.done([
-                  ...aiState.get(),
-                  {
-                    role: "function",
-                    name: "get_event_info",
-                    content: JSON.stringify(props)
-                  },
-                ]);
+          //can call from other func to get information from an external api
+          const weatherInfo = await getWeather();
 
-                return <EventSchedule {...props} />
-            }
-        }
-    }
+          await sleep(2000);
+
+          aiState.done([
+            ...aiState.get(),
+            {
+              id: randomUUID(),
+              role: "function",
+              name: "getWeatherInfo",
+              content: JSON.stringify(weatherInfo),
+            },
+          ]);
+
+          return (
+            <WeeakWeather location={location} weather={weatherInfo.weather} />
+          );
+        },
+      },
+    },
   });
-  
+
   return {
     id: Date.now(),
-    display: ui
+    display: ui,
   };
 }
 
-const initialAIState: InitialAIStateProps[] = []
-const initialUIState: InitialUIStateProps[] = []
+// Define the initial state of the AI. It can be any JSON object.
+const initialAIState: {
+  role: "user" | "assistant" | "system" | "function";
+  content: string;
+  id?: string;
+  name?: string;
+}[] = [];
+
+// The initial UI state that the client will keep track of, which contains the message IDs and their UI nodes.
+const initialUIState: {
+  id: number;
+  display: React.ReactNode;
+}[] = [];
 
 export const AI = createAI({
-    actions: {
-        submitUserMessage
-    },
-    initialAIState,
-    initialUIState
-})
+  actions: {
+    submitUserMessage,
+  },
+  initialAIState,
+  initialUIState,
+});
