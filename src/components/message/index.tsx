@@ -7,23 +7,23 @@ type MessageProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function Message({from, ...props}: MessageProps) {
   const sharedStyle =
-    "flex flex-col gap-1 whitespace-pre-wrap p-2 rounded-md w-fit border border-input";
+    "flex flex-col gap-1 whitespace-pre-wrap p-2 rounded-lg w-fit border border-input";
     return from === "user" ? (
       <div
         className={cn(
           sharedStyle,
-          "ml-4 items-end bg-primary text-primary-foreground pl-4"
+          "ml-4 items-end bg-primary text-primary-foreground pl-4 rounded-tr-none"
         )}
         {...props}
       >
-        <span className="text-xs text-muted">User</span>
+        <span className="text-xs text-accent">User</span>
         {props.children}
       </div>
     ) : (
       <div
         className={cn(
           sharedStyle,
-          "mr-8 bg-background text-background-foreground pr-4"
+          "mr-8 bg-background text-background-foreground pr-4 rounded-tl-none"
         )}
         {...props}
       >
