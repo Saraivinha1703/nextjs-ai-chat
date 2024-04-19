@@ -52,6 +52,13 @@ export function DesktopNavbar() {
           >
             Simple RAG
           </Link>
+          <Link
+            href="/rag-chat"
+            className="select-none hover:underline"
+            as="/rag-chat"
+          >
+            RAG Chat
+          </Link>
         </div>
 
         <div className="flex items-center">

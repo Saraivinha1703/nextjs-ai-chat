@@ -48,8 +48,11 @@ export default function SimpleRAGPage() {
     return (
       <main className="flex h-full flex-col items-center justify-between p-4 sm:p-8">
         <h1 className="font-bold text-2xl w-full text-center p-2 bg-clip-text bg-gradient-to-br from-30% from-teal-500 via-50% via-sky-500 to-70% to-purple-500 text-transparent sm:p-12">
-          Ask about dividend with OpenAI Embeddings and Pinecone vector store.<br/>
-          <span className="font-light text-sm bg-opacity-70">(Dividend document from Trading212)</span>
+          Ask about dividend with OpenAI Embeddings and Pinecone vector store.
+          <br />
+          <span className="font-light text-sm bg-opacity-70">
+            (Dividend document from Trading212)
+          </span>
         </h1>
         {loading && (
           <p className="flex gap-2">
@@ -67,7 +70,7 @@ export default function SimpleRAGPage() {
         ) : loading ? (
           <></>
         ) : (
-          <PiRobotThin size={80} />
+          <PiRobotThin size={80} className="animate-bounce" />
         )}
         <div className="flex my-4 gap-2">
           <Input
@@ -80,7 +83,11 @@ export default function SimpleRAGPage() {
           </Button>
         </div>
 
-        <Button disabled={loading} onClick={createIndexAndEmbeddings}>
+        <Button
+          disabled={loading}
+          onClick={createIndexAndEmbeddings}
+          className="bg-gradient-to-tr from-secondary to-primary"
+        >
           Create index and embeddings
         </Button>
       </main>

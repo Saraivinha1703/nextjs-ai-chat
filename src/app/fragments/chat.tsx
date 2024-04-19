@@ -13,7 +13,9 @@ export function Chat() {
   return (
     <div className="flex flex-col w-full max-w-xl px-4 h-[calc(100vh-4rem)] justify-between items-center mx-auto">
       <div className="flex flex-col w-full max-w-xl max-h-[calc(100%-4.5rem)] pt-6">
-        <span className="w-full text-center text-sm text-muted">Open Assistant</span>
+        <span className="w-full text-center text-sm text-muted">
+          Open Assistant
+        </span>
         {messages.length === 0 ? (
           <div className="flex flex-col gap-8 w-full items-center">
             <span className="text-2xl font-semibold text-center">
@@ -52,7 +54,10 @@ export function Chat() {
             placeholder="Say something..."
             onChange={handleInputChange}
           />
-          <Button size="icon">
+          <Button
+            size="icon"
+            className="bg-gradient-to-tr from-secondary to-primary"
+          >
             <PiPaperPlaneTilt size={20} />
           </Button>
         </div>

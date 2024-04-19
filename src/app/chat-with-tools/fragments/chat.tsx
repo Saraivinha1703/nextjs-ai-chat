@@ -54,7 +54,7 @@ export function Chat() {
             placeholder="Say something..."
             onChange={handleInputChange}
           />
-          <Button size="icon">
+          <Button size="icon" className="bg-gradient-to-tr from-secondary to-primary">
             <PiPaperPlaneTilt size={20} />
           </Button>
         </div>
