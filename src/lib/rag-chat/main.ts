@@ -1,4 +1,3 @@
-import { PromptTemplate } from "@langchain/core/prompts";
 import { ExperimentalMessage, experimental_generateText } from "ai";
 import { createStreamableUI } from "ai/rsc";
 import { generateTools } from "./tools";
@@ -25,7 +24,7 @@ export const getResult = async (
     system: `You are a polity and helpful assistant that can access external information through your tools.
       You can give infomation about finance when the user asks for it passing the question in string, it can not be a numerical value or not related to finance, using \`getFinancialInfo\`
       You can get the ticker infomation when the user asks for it passing the name of the company in string, it can not be a numerical value, using \`getTickerInfo\`
-      You can get the stock price when the user asks for it passing the ticker from a company in string, it can not be a numerical value, using \`getStockPrice\`
+      You can get the stock price when the user asks for it passing the ticker from a company. using \`getStockPrice\`
       Your name is Mistral AI.`,
     messages: [...history],
   });

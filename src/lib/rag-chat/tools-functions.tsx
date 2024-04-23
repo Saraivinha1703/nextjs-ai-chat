@@ -66,3 +66,37 @@ export async function getStockPrice(
     </Message>
   );
 }
+
+export async function getFilteredStockPrice(
+  ticker: string,
+  exchange: string,
+  country: string,
+  messageStream: ReturnType<typeof createStreamableUI>
+) {
+    console.log("getting stock price");
+
+    const url = `https://api.twelvedata.com/price?symbol=${ticker}&exchange=${exchange}&country=${country}&apikey=${process.env.TWELVEDATA_API_KEY}`;
+
+    const response = await fetch(url);
+    const { price } = (await response.json()) as { price: string };
+    const priceNum = parseFloat(price);
+
+    messageStream.update(
+        <div className="w-full">
+            <span>Here is the price that you asked 🥳:</span>
+            <div className="w-5/6 px-8 py-4 bg-accent/50 rounded-lg ring-1 ring-primary">
+                <div className="flex w-full justify-between">
+                    <h1 className="bg-gradient-to-tr from-secondary to-primary text-transparent bg-clip-text font-bold">
+                        {ticker}
+                    </h1>
+                    <span className="text-primary/60 text-sm">Exchange: {exchange}</span>
+                </div>
+                <span className="text-sm text-muted">{country}</span>
+                <div>
+                    <span className="text-lg font-semibold">${priceNum.toFixed(2)}</span>
+                    <span className="text-muted text-sm">(dolars)</span>
+                </div>
+            </div>
+        </div>
+    );
+}

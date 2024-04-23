@@ -8,11 +8,11 @@ import { AI } from "@/lib/rag-chat/actions";
 import { cn } from "@/lib/utils";
 import { useActions, useUIState } from "ai/rsc";
 import { useState } from "react";
-import { PiPaperPlaneTilt, PiRobotThin, PiSpinnerGapLight } from "react-icons/pi";
+import { PiPaperPlaneTilt, PiRobotThin } from "react-icons/pi";
 
 export function RAGChat() {
   const [messages, setMessages] = useUIState<typeof AI>();
-  const { submitUserMessage } = useActions<typeof AI>();
+  const { submitUserMessageRAGChat } = useActions<typeof AI>();
 
   const [input, setInput] = useState<string>("");
 
@@ -33,7 +33,7 @@ export function RAGChat() {
     ]);
 
     // Submit and get response message
-    const responseMessage = await submitUserMessage(input);
+    const responseMessage = await submitUserMessageRAGChat(input);
     setMessages((currentMessages) => [...currentMessages, responseMessage]);
 
     setInput("");
@@ -90,7 +90,7 @@ export function RAGChat() {
                     }}
                     />
                 <div className="w-fit p-[0.05rem] bg-gradient-to-tr from-secondary to-primary rounded-md">
-                    <Button size="icon" variant="outline">
+                    <Button type="submit" size="icon" variant="outline">
                     <PiPaperPlaneTilt size={20} className="text-primary" />
                     </Button>
                 </div>

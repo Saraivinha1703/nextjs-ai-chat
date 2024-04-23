@@ -8,3 +8,10 @@ export type SymbolSearchObject = {
   country: string;
   currency: string;
 };
+
+export type Actions = {
+  submitUserMessageRAGChat: (content: string) => Promise<{
+    id: string;
+    display: JSX.Element;
+  }>;
+};

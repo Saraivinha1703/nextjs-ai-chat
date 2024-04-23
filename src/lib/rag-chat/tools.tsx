@@ -1,7 +1,7 @@
 import { ExperimentalTool } from "ai";
 import { createStreamableUI } from "ai/rsc";
 import { z } from "zod";
-import { getFinancialInfo, getStockPrice, getTickerInfo } from "./tools-functions";
+import { getFilteredStockPrice, getFinancialInfo, getStockPrice, getTickerInfo } from "./tools-functions";
 
 export function generateTools(
   messageStream: ReturnType<typeof createStreamableUI>
@@ -39,8 +39,25 @@ export function generateTools(
             "The ticker symbol to get the stock price. It must be a string value."
           ),
       }),
-      execute: async ({ ticker }) => 
-        await getStockPrice(ticker, messageStream),
+      execute: async ({ ticker }) => await getStockPrice(ticker, messageStream),
+    },
+    getFilteredStockPrice: {
+      description:
+        "Get the stock price for a certain company if the user passes the ticker, exchange where the stock is traded and the country where the stock is traded",
+      parameters: z.object({
+        ticker: z
+          .string()
+          .describe(
+            "The ticker symbol to get the stock price."
+          ),
+        exchange: z
+          .string()
+          .describe("Exchange where instrument/share/stock is traded."),
+        country: z
+          .string()
+          .describe("Country where instrument/share/stock is traded."),
+      }),
+      execute: async ({ ticker, exchange, country }) => await getFilteredStockPrice(ticker, exchange, country, messageStream),
     },
   };
 

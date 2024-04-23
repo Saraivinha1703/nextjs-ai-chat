@@ -10,7 +10,7 @@ export function LookingUpForTicker() {
         <div
           className={cn(
             "[&::-webkit-scrollbar]:w-[0.35rem] [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb:hover]:bg-primary/50",
-            "flex flex-col gap-2 p-2 max-h-72 overflow-auto bg-gradient-to-t from-background to-transparent"
+            "flex flex-col gap-2 p-2 max-h-96 overflow-auto bg-gradient-to-t from-background to-transparent"
           )}
         >
           <StockSymbolSearchSkeleton />
@@ -36,7 +36,7 @@ export function DisplayingTickers({ data }: DisplayingTickersProps) {
       <div
         className={cn(
           "[&::-webkit-scrollbar]:w-[0.35rem] [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb:hover]:bg-primary/50",
-          "flex flex-col gap-2 p-2 max-h-72 overflow-auto bg-gradient-to-t from-background to-transparent"
+          "flex flex-col gap-2 p-2 max-h-96 overflow-auto bg-gradient-to-t from-background to-transparent"
         )}
       >
         {data.map((val, idx) => (

@@ -3,10 +3,11 @@ import 'server-only';
 import { createAI, createStreamableUI, getMutableAIState } from "ai/rsc";
 import { PiSpinnerGap } from "react-icons/pi";
 import { Message } from "@/components/message";
-import { AIState, Actions, ChatMessage, UIState } from "../chat/types";
+import { AIState, ChatMessage, UIState } from "../chat/types";
 import { getResult } from "./main";
+import { Actions } from './types';
 
-async function submitUserMessage(content: string) {
+async function submitUserMessageRAGChat(content: string) {
   "use server";
 
   const aiState = getMutableAIState();
@@ -69,7 +70,7 @@ async function submitUserMessage(content: string) {
 
 export const AI = createAI<AIState, UIState, Actions>({
   actions: {
-    submitUserMessage,
+    submitUserMessageRAGChat,
   },
   initialUIState: [] as UIState,
   initialAIState: [] as AIState,
