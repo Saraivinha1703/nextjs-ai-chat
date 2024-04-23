@@ -2,4 +2,4 @@ export const pineconeIndexName = "test-index";
 export const pineconeRAGChatIndex = "rag-chat-index";
 
 // waited time when the index initialize
-export const timeout = 180000
+export const timeout = 10000
