@@ -16,9 +16,7 @@ export function RAGChat() {
 
   const [input, setInput] = useState<string>("");
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  async function handleSubmit() {
     // Add user message to UI state
     setMessages((curr) => [
       ...curr,
@@ -78,33 +76,38 @@ export function RAGChat() {
           </div>
         )}
       </div>
-        <form className="w-full" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2 items-center pb-2">
-                <div className="flex gap-2 w-full py-4">
-                <Input
-                    className="p-2 border border-input rounded shadow-sm bg-background"
-                    value={input}
-                    placeholder="Say something..."
-                    onChange={(event) => {
-                        setInput(event.target.value);
-                    }}
-                    />
-                <div className="w-fit p-[0.05rem] bg-gradient-to-tr from-secondary to-primary rounded-md">
-                    <Button type="submit" size="icon" variant="outline">
-                    <PiPaperPlaneTilt size={20} className="text-primary" />
-                    </Button>
-                </div>
-                </div>
-                <Button
-                    type="button"
-                    onClick={createIndexAndEmbeddings}
-                    size="sm"
-                    className="bg-gradient-to-tr from-secondary font-semibold to-primary w-fit"
-                    >
-                    Create index and embeddings
-                </Button>
+      <form className="w-full">
+        <div className="flex flex-col gap-2 items-center pb-2">
+          <div className="flex gap-2 w-full py-4">
+            <Input
+              className="p-2 border border-input rounded shadow-sm bg-background"
+              value={input}
+              placeholder="Say something..."
+              onChange={(event) => {
+                setInput(event.target.value);
+              }}
+            />
+            <div className="w-fit p-[0.05rem] bg-gradient-to-tr from-secondary to-primary rounded-md">
+              <Button
+                type="submit"
+                size="icon"
+                variant="outline"
+                formAction={async () => await handleSubmit()}
+              >
+                <PiPaperPlaneTilt size={20} className="text-primary" />
+              </Button>
             </div>
-        </form>
+          </div>
+          <Button
+            type="button"
+            onClick={createIndexAndEmbeddings}
+            size="sm"
+            className="bg-gradient-to-tr from-secondary font-semibold to-primary w-fit"
+          >
+            Create index and embeddings
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }
