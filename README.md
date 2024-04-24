@@ -38,15 +38,15 @@ There are different ways to do a RAG chat, I decided to use the retrieval as a t
 
 It can talk about finance (limited by the documents in `documents/financial`) according to the informating it have in the vector store, doing a semantic search to choose the best answer:
 
-
+https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/8c7bc277-0f5c-4399-bcea-21e007bc0023
 
 It can retrieve possible stocks symbols according to the name of the company, you can also see the price for some stocks (the API returns an empty string in some of them, but this have a validation) and if you pass an invalid name of a company it also have a custom message, but those validations are made in the tool and not by the LLM: 
 
-
+https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/6a0dc035-2195-4f5c-8052-9872b07c0e8f
 
 It can also get stock prices if the user passes a stock symbol. It has some issue with the stock symbol if it has numbers, but it may be the prompt, which makes the LLM do a validation (will be fixed):
 
-
+https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/c7261828-38ce-443b-a922-77cc0ab5993c
 
 To develop this RAG is basically do a simple RAG QA and use it as a tool as I did before in the Generative UI, which use tools to call *external* APIs. You can see all the files that make it work in `src/lib/rag-chat` folder.
 # front-end
