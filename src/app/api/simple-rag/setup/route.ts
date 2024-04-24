@@ -10,6 +10,9 @@ import { pineconeIndexName } from "../../../../../config";
 const client = new Pinecone({ apiKey: process.env.PINECONE_API_KEY || "" });
 
 export async function GET() {
+    //Mistral
+    //const vectorDimensions = 1024;
+    //GPT-3.5
     const vectorDimensions = 1536;
     const docs: Document<Record<string, any>>[] = [];
     

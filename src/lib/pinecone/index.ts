@@ -75,8 +75,12 @@ export const updatePineconeIndex = async (
             });
             
             const chunks = await textSplitter.createDocuments([text]);
-            // const embeddingsArrays = await new MistralAIEmbeddings().embedDocuments(
-            //     chunks.map((chunck) => chunck.pageContent.replace(/\n/g, " "))
+            // const embeddingsArrays = await new MistralAIEmbeddings({
+            //   apiKey: process.env.TOGETHER_AI_API_KEY,
+            //   endpoint: "https://api.together.xyz/v1",
+            //   modelName: "mistralai/Mixtral-8x7B-v0.1",
+            // }).embedDocuments(
+            //   chunks.map((chunck) => chunck.pageContent.replace(/\n/g, " "))
             // );
             const embeddingsArrays = await new OpenAIEmbeddings().embedDocuments(
                 chunks.map((chunck) => chunck.pageContent.replace(/\n/g, " "))
@@ -128,9 +132,11 @@ export const queryPineconeVectorStoreAndLLM = async (
         const index = client.Index(indexName);
         
         // Create query embedding
-        // const queryEmbedding = await new MistralAIEmbeddings().embedQuery(
-        //   query
-        // );
+        // const queryEmbedding = await new MistralAIEmbeddings({
+        //   apiKey: process.env.TOGETHER_AI_API_KEY,
+        //   endpoint: "https://api.together.xyz/v1",
+        //   modelName: "mistralai/Mixtral-8x7B-v0.1",
+        // }).embedQuery(query);
         const queryEmbedding = await new OpenAIEmbeddings().embedQuery(query);
         
         let queryResponse = await index.query({
@@ -148,6 +154,7 @@ export const queryPineconeVectorStoreAndLLM = async (
             // const llm = new ChatMistralAI({
             //   apiKey: process.env.TOGETHER_AI_API_KEY,
             //   endpoint: "https://api.together.xyz/v1",
+            //   modelName: "mistralai/Mixtral-8x7B-Instruct-v0.1",
             // });
             const llm = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
             const chain = loadQAStuffChain(llm);
