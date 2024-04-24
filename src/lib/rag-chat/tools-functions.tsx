@@ -2,8 +2,10 @@ import { MessageSkeleton } from "@/components/message/skeleton";
 import { createStreamableUI } from "ai/rsc";
 import { getLLMPineconeVectorStoreQueryResponse } from "./main";
 import { Message } from "@/components/message";
-import { DisplayingTickers, FilteredStockPriceCard, FilteredStockPriceCardSkeleton, LookingUpForTicker } from "./tools-components";
+import { DisplayingTickers, FilteredStockPriceCardSkeleton, LookingUpForTicker } from "./tools-components";
 import { SymbolSearchObject } from "./types";
+import { FilteredStockPriceCard } from "./tools-client-components";
+import { sleep } from "../utils";
 
 export async function getFinancialInfo(userQuestion: string, messageStream: ReturnType<typeof createStreamableUI>) {
     messageStream.update(<MessageSkeleton />);
@@ -69,6 +71,7 @@ export async function getFilteredStockPrice(
   messageStream: ReturnType<typeof createStreamableUI>
 ) {
     messageStream.update(<FilteredStockPriceCardSkeleton />);
+    await sleep(4000);
     const url = `https://api.twelvedata.com/price?symbol=${ticker}&exchange=${exchange}&country=${country}&apikey=${process.env.TWELVEDATA_API_KEY}`;
 
     const response = await fetch(url);

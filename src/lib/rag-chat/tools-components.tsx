@@ -3,6 +3,8 @@ import { cn } from "../utils";
 import { StockSymbolSearch } from "@/components/stock-symbol-search";
 import { SymbolSearchObject } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Slider } from "@/components/ui/slider";
+import { useState } from "react";
 
 export function LookingUpForTicker() {
     return (
@@ -55,46 +57,43 @@ export function DisplayingTickers({ data }: DisplayingTickersProps) {
   );
 }
 
-type FilteredStockPriceCardProps = {
-  ticker: string;
-  exchange: string;
-  country: string;
-  priceNum: number;
-};
-
-export function FilteredStockPriceCard({ticker, country, exchange, priceNum}: FilteredStockPriceCardProps) {
-  return (
-    <div className="w-full">
-      <span>Here is the price that you asked 🥳:</span>
-      <div className="w-5/6 px-8 py-4 bg-accent/50 rounded-lg ring-1 ring-primary">
-        <div className="flex w-full justify-between">
-          <h1 className="bg-gradient-to-tr from-secondary to-primary text-transparent bg-clip-text font-bold">
-            {ticker}
-          </h1>
-          <span className="text-primary/60 text-sm">Exchange: {exchange}</span>
-        </div>
-        <span className="text-sm text-muted">{country}</span>
-        <div>
-          <span className="text-lg font-semibold">${priceNum.toFixed(2)}</span>
-          <span className="text-muted text-sm">(dolars)</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function FilteredStockPriceCardSkeleton() {
   return (
     <div className="w-full py-1">
       <Skeleton className="mb-1 h-4 w-48 rounded-sm" />
-      <Skeleton className="flex flex-col gap-2 w-5/6 px-8 py-4">
-        <div className="flex w-full justify-between">
-          <Skeleton className="h-5 w-20 rounded-sm" />
-          <Skeleton className="h-3 w-24 rounded-sm" />
-        </div>
-        <Skeleton className="h-3 w-16 rounded-sm" />
-        <div>
+      <Skeleton className="flex flex-col gap-6 w-5/6 px-8 py-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex w-full justify-between">
+            <Skeleton className="h-5 w-20 rounded-sm" />
+            <Skeleton className="h-3 w-24 rounded-sm" />
+          </div>
+          <Skeleton className="h-3 w-16 rounded-sm" />
           <Skeleton className="h-5 w-32" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Skeleton className="w-28 h-3 rounded-sm"/>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <Skeleton className="w-1/4 h-10" />
+              <Skeleton className="w-full h-3 rounded-sm" />
+            </div>
+          <Skeleton className="flex justify-between items-end p-4">
+            <div className="flex flex-col items-center gap-2">
+              <Skeleton className="w-16 h-5" />
+              <Skeleton className="w-8 h-5" />
+            </div>
+            <Skeleton className="w-6 h-6 rounded-sm" />
+            <div className="flex flex-col items-center gap-2">
+              <Skeleton className="w-10 h-6" />
+              <Skeleton className="w-11 h-5" />
+            </div>
+            <Skeleton className="w-6 h-6 rounded-sm" />
+            <div className="flex flex-col items-center gap-2">
+              <Skeleton className="w-10 h-6" />
+              <Skeleton className="w-16 h-5" />
+            </div>
+          </Skeleton>
+          </div>
         </div>
       </Skeleton>
     </div>
