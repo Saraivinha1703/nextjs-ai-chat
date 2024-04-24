@@ -3,8 +3,6 @@ import { cn } from "../utils";
 import { StockSymbolSearch } from "@/components/stock-symbol-search";
 import { SymbolSearchObject } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
 
 export function LookingUpForTicker() {
     return (
@@ -60,7 +58,7 @@ export function DisplayingTickers({ data }: DisplayingTickersProps) {
 export function FilteredStockPriceCardSkeleton() {
   return (
     <div className="w-full py-1">
-      <Skeleton className="mb-1 h-4 w-48 rounded-sm" />
+      <Skeleton className="mb-1 h-4 w-56 rounded-sm" />
       <Skeleton className="flex flex-col gap-6 w-5/6 px-8 py-4">
         <div className="flex flex-col gap-2">
           <div className="flex w-full justify-between">

@@ -1,22 +1,28 @@
 "use client";
 
 import { Message } from "@/components/message";
-import { MessageSkeleton } from "@/components/message/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AI } from "@/lib/rag-chat/actions";
 import { cn } from "@/lib/utils";
 import { useActions, useUIState } from "ai/rsc";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PiPaperPlaneTilt, PiRobotThin } from "react-icons/pi";
 
 export function RAGChat() {
+  const bottomRef = useRef <HTMLDivElement>(null);
+
   const [messages, setMessages] = useUIState<typeof AI>();
   const { submitUserMessageRAGChat } = useActions<typeof AI>();
 
   const [input, setInput] = useState<string>("");
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+  
   async function handleSubmit() {
+    if(input === "") return;
     // Add user message to UI state
     setMessages((curr) => [
       ...curr,
@@ -73,6 +79,7 @@ export function RAGChat() {
             {messages.map((message) => (
               <div key={message.id}>{message.display}</div>
             ))}
+            <div ref={bottomRef} />
           </div>
         )}
       </div>
