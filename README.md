@@ -185,6 +185,11 @@ Semantic search is a type of search done by `embeddings`, which are vectors that
 
 The LLM have our vector store database, in this case [Pinecone](https://docs.pinecone.io/home) as a source to answer the user's questions. Here is the workflow, we setup a `documents` folder in our root folder, read all the files there, break each text content inside them into chunks, convert this chunks into embedding values, them make a query function to search for what you want. In this case I just put one file about dividends from [Trading212](https://www.trading212.com/learn/dividends). 
 
+------------
+The embeddings and the response generation are done by OpenAI embeddings (with a vector dimension of 1536) and chat. It can be changed to Mistral's `mistral-embed` (with a vector dimension of 1024) which costs $0.10 (dolars) per million tokens and the same Mistral model used in other examples to be the chat, using it by Together AI. This would be the best way in terms of cost and benefit I belive.
+------------
+The downside is that to use `mistral-embed` you must use by Mistral's endpoint which can only be used if you pay them, passing your credit card information which I didn't want to do.
+
 Here is how it works:
 
 https://github.com/Saraivinha1703/nextjs-ai-chat/assets/62428073/2bdca75b-31e1-4aa9-bd9e-2c927540371b
