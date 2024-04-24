@@ -81,6 +81,11 @@ export async function getFilteredStockPrice(
     const { price } = (await response.json()) as { price: string };
     const priceNum = parseFloat(price);
 
+    if(Number.isNaN(priceNum)) {
+      messageStream.update(<Message from="ai">Sorry, couldn&apos;t find the price for this stock 😔.</Message>);
+      return
+    }
+
     messageStream.update(
         <div className="w-full">
             <span>Here is the price that you asked 🥳:</span>
