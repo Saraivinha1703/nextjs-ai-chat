@@ -29,6 +29,10 @@ for a simple RAG (Retrieval Augmented Generation) you will need a Pinecone API k
 ```env
 PINECONE_API_KEY=secret-key
 ```
+## Free AI Chat
+You can make a free AI chat using Hugging Face Inference API, in this example I'm using `OpenAssistant` which is currently unavailable, so I'm also using `microsoft/Phi-3-mini-4k-instruct` with server actions like in the Generative UI example or the RAG Chat.
+The problem is a bug when sending and receiving the message, there is a delay, with the `OpenAssistant` it used to work very smooth, but now the service is unavailable.
+
 ## Tool Calling (Only works with OpenAI)
 There are some models that support `tool calling` but the AI SDK makes the configuration easier for OpenAI. It can also work with other providers and models, but it takes a little more configurations that I not yet know how to set up.
 
