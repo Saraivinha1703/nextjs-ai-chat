@@ -1,7 +1,7 @@
 import { ExperimentalTool } from "ai";
 import { createStreamableUI } from "ai/rsc";
 import { z } from "zod";
-import { getFilteredStockPrice, getFinancialInfo, getStockPrice, getTickerInfo } from "./tools-functions";
+import { getFilteredStockPrice, getFinancialInfo, getFirstShareInfo, getSiteEmbed, getStockPrice, getTickerInfo } from "./tools-functions";
 
 export function generateTools(
   messageStream: ReturnType<typeof createStreamableUI>
@@ -47,9 +47,7 @@ export function generateTools(
       parameters: z.object({
         ticker: z
           .string()
-          .describe(
-            "The ticker symbol to get the stock price."
-          ),
+          .describe("The ticker symbol to get the stock price."),
         exchange: z
           .string()
           .describe("Exchange where instrument/share/stock is traded."),
@@ -57,7 +55,26 @@ export function generateTools(
           .string()
           .describe("Country where instrument/share/stock is traded."),
       }),
-      execute: async ({ ticker, exchange, country }) => await getFilteredStockPrice(ticker, exchange, country, messageStream),
+      execute: async ({ ticker, exchange, country }) =>
+        await getFilteredStockPrice(ticker, exchange, country, messageStream),
+    },
+    getFirstShareInfo: {
+      description:
+        "When the user asks for his first share suggestion on how to choose it, use this tool.",
+      parameters: z.object({
+        userQuestion: z.string().describe("The whole user's question."),
+      }),
+      execute: async ({ userQuestion }) =>
+        await getFirstShareInfo(messageStream),
+    },
+    getSiteEmbed: {
+      description:
+        "If the users asks to see a website and passes the link for it, use this tool. The link to the desired website must be a string with `https://` in the beggining.",
+      parameters: z.object({
+        webSiteLink: z.string().describe("The link to the desired website"),
+      }),
+      execute: async ({ webSiteLink }) =>
+        await getSiteEmbed(webSiteLink, messageStream),
     },
   };
 

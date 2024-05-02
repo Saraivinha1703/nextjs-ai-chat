@@ -6,6 +6,7 @@ import { DisplayingTickers, FilteredStockPriceCardSkeleton, LookingUpForTicker }
 import { SymbolSearchObject } from "./types";
 import { FilteredStockPriceCard } from "./tools-client-components";
 import { sleep } from "../utils";
+import puppeteer from "puppeteer"
 
 export async function getFinancialInfo(userQuestion: string, messageStream: ReturnType<typeof createStreamableUI>) {
     messageStream.update(<MessageSkeleton />);
@@ -84,4 +85,40 @@ export async function getFilteredStockPrice(
     }
 
     messageStream.update(<FilteredStockPriceCard country={country} ticker={ticker} exchange={exchange} priceNum={priceNum} />);
+}
+
+export async function getFirstShareInfo(
+  messageStream: ReturnType<typeof createStreamableUI>
+) {
+  //https://www.degiro.pt/centro-de-conhecimento/academia-do-investidor/curso-iniciantes/preco-acaoo
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto(
+    "https://www.degiro.pt/centro-de-conhecimento/academia-do-investidor/curso-iniciantes/preco-acaoo"
+  );
+
+  await page.click(
+    "button#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"
+  );
+
+  const pText = await page.$$eval("#top-lesson p", arr => arr.map(p => p.textContent));
+  
+  console.log(pText);
+  messageStream.update(<Message from="ai">{pText}</Message>)
+
+  await page.close();
+}
+
+export async function getSiteEmbed(
+  link: string,
+  messageStream: ReturnType<typeof createStreamableUI>
+) {
+  messageStream.update(
+    <div>
+      <h1>Here is the site that you asked for 🥳!</h1>
+      <iframe src={link} width={500} height={500} className="ring-1 ring-secondary rounded-md"></iframe>
+    </div>
+  )
 }
