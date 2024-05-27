@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Pinecone } from "@pinecone-database/pinecone"
-import { queryPineconeVectorStoreAndLLM } from "@/lib/utils";
+import { queryPineconeVectorStoreAndLLM } from "@/lib/pinecone";
 import { pineconeIndexName } from "../../../../../config";
 
 const client = new Pinecone({ apiKey: process.env.PINECONE_API_KEY || "" });

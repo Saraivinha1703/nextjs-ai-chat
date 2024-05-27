@@ -3,13 +3,16 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
-import { createPineconeIndex, updatePineconeIndex } from "@/lib/utils";
+import { createPineconeIndex, updatePineconeIndex } from "@/lib/pinecone";
 import { Document } from "langchain/document";
 import { pineconeIndexName } from "../../../../../config";
 
 const client = new Pinecone({ apiKey: process.env.PINECONE_API_KEY || "" });
 
 export async function GET() {
+    //Mistral
+    //const vectorDimensions = 1024;
+    //GPT-3.5
     const vectorDimensions = 1536;
     const docs: Document<Record<string, any>>[] = [];
     

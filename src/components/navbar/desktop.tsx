@@ -7,9 +7,9 @@ export function DesktopNavbar() {
   return (
     <div className="justify-between hidden sm:flex sm:w-full">
       <Link href="/" className="relative group">
-        <div className="transition-all duration-300 bg-gradient-to-tr from-30% from-purple-500/70 via-50% via-yellow-500/70 to-80% to-rose-600/70 p-[0.1rem] rounded-md opacity-0 group-hover:opacity-100">
+        <div className="transition-all duration-300 bg-gradient-to-tr from-secondary/70 to-primary/70 p-[0.1rem] rounded-md opacity-0 group-hover:opacity-100">
           <div className="bg-background p-1 rounded-md">
-            <h1 className="text-2xl select-none font-light text-transparent bg-clip-text bg-gradient-to-tr from-30% from-purple-500 via-yellow-500 to-rose-600">
+            <h1 className="text-2xl select-none font-light text-transparent bg-clip-text bg-gradient-to-tr from-secondary to-primary">
               Chat
             </h1>
           </div>
@@ -51,6 +51,13 @@ export function DesktopNavbar() {
             as="/simple-rag"
           >
             Simple RAG
+          </Link>
+          <Link
+            href="/rag-chat"
+            className="select-none hover:underline"
+            as="/rag-chat"
+          >
+            RAG Chat
           </Link>
         </div>
 

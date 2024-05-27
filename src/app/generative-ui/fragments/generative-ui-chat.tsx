@@ -59,9 +59,7 @@ export function GenerativeUIChat() {
             )}
           >
             {messages.map((message) => (
-              <div key={message.id}>
-                {message.display}
-              </div>
+              <div key={message.id}>{message.display}</div>
             ))}
           </div>
         )}
@@ -76,7 +74,10 @@ export function GenerativeUIChat() {
               setInput(event.target.value);
             }}
           />
-          <Button size="icon">
+          <Button
+            size="icon"
+            className="bg-gradient-to-tr from-secondary to-primary"
+          >
             <PiPaperPlaneTilt size={20} />
           </Button>
         </div>

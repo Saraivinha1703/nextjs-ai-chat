@@ -2,6 +2,8 @@ import { HfInference } from "@huggingface/inference";
 import { HuggingFaceStream, StreamingTextResponse } from "ai";
 import { experimental_buildOpenAssistantPrompt } from "ai/prompts";
 
+/* CURRENTLY UNAVAILABLE */
+
 // Create a new HuggingFace Inference instance
 const Hf = new HfInference(process.env.HUGGINGFACEHUB_API_KEY);
 
